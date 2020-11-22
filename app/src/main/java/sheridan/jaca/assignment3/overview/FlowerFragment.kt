@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import sheridan.jaca.assignment3.R
 import sheridan.jaca.assignment3.databinding.FragmentOverviewBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,8 +20,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class OverviewFragment : Fragment() {
 
-    private val viewModel: OverviewViewModel by lazy {
-        ViewModelProvider(this).get(OverviewViewModel::class.java)
+    private val viewModel: FlowerViewModel by lazy {
+        ViewModelProvider(this).get(FlowerViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +35,10 @@ class OverviewFragment : Fragment() {
         val binding = FragmentOverviewBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        binding.viewModel = viewModel
+        binding.flowerList.adapter = FlowerAdapter()
+
+        setHasOptionsMenu(true)
         return binding.root
     }
 }

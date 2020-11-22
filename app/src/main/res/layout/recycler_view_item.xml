@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="viewModel"
-            type="sheridan.jaca.assignment3.overview.OverviewViewModel" />
+            name="flower"
+            type="sheridan.jaca.assignment3.network.Flower" />
     </data>
 
     <LinearLayout
@@ -14,7 +16,8 @@
         <ImageView
             android:id="@+id/flower_image_small"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:imageUrl="@{flower.smallImgSrcUrl}"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -26,7 +29,7 @@
                     android:id="@+id/flower_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="flower name"
+                    android:text="@{flower.name}"
                     android:textColor="#4CAF50"
                     android:textSize="30sp"
                     android:layout_margin="10dp"/>
@@ -35,7 +38,7 @@
                     android:id="@+id/flower_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$10"
+                    android:text="@{Double.toString(flower.price)}"
                     android:textColor="#4CAF50"
                     android:textSize="30sp"
                     android:layout_margin="10dp"/>
@@ -44,7 +47,7 @@
                 android:id="@+id/flower_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description"
+                android:text="@{flower.text}"
                 android:textSize="20sp"
                 android:layout_margin="10dp"/>
         </LinearLayout>

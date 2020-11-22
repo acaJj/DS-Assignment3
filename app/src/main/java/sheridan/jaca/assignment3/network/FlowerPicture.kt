@@ -1,4 +1,3 @@
 package sheridan.jaca.assignment3.network
 
-class FlowerPicture {
-}
+data class FlowerPicture(val smallImgUrl: String, val largeImgUrl: String)
