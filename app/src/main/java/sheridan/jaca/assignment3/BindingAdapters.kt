@@ -5,8 +5,8 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import sheridan.jaca.assignment3.network.Flower
+import sheridan.jaca.assignment3.domain.Flower
+import sheridan.jaca.assignment3.network.FlowerJson
 import sheridan.jaca.assignment3.overview.FlowerAdapter
 
 @BindingAdapter("imageUrl")

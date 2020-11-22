@@ -1,33 +1,47 @@
 package sheridan.jaca.assignment3.overview
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import sheridan.jaca.assignment3.network.Flower
+import sheridan.jaca.assignment3.domain.Flower
+import sheridan.jaca.assignment3.network.FlowerJson
 import sheridan.jaca.assignment3.network.FlowerApi
 import java.lang.Exception
 
 class FlowerViewModel: ViewModel() {
-    private val _flowers = MutableLiveData<List<Flower>>()
-    val flowers: MutableLiveData<List<Flower>>
-        get() = _flowers
-
+    //val flowers = MutableLiveData<List<FlowerJson>>()
+    private var flowers : LiveData<List<Flower>>? = null
     init {
         getFlowerData()
     }
 
-    private fun getFlowerData(){
-        viewModelScope.launch {
+    fun getFlowerData() : LiveData<List<Flower>>{
+       /* viewModelScope.launch {
             try {
-                _flowers.value = FlowerApi.retrofitService.getFlowers()
-                Log.i("WHAT","SUCCESS")
-            }catch (e:Exception){
-                //on failure, set live data to empty array list
-                _flowers.value = ArrayList()
-                Log.i("WHAT","ERROR")
+                val catalog = FlowerApi.retrofitService.getFlowerCatalog()
+                val flowerData = catalog.flowers
+                flowers.value = flowerData.mapIndexed { index, flowerJson -> flowerJson.toFlower(index) }
+                Log.i("SUCCESS","JSON RETRIEVAL COMPLETED")
+            }catch (e: Exception){
+                Log.i("ERROR","JSON RETRIEVAL FAILED")
             }
+        }*/
+
+        return flowers ?: liveData {
+            val catalog = FlowerApi.retrofitService.getFlowerCatalog()
+            val flowers = catalog.flowers.mapIndexed { index, flowerJson ->
+                flowerJson.toFlower(index)
+            }
+            emit(flowers)
+        }.also {
+            flowers = it
         }
+
+        //return flowers.also { flowers = it }*/
+    }
+
+    private fun FlowerJson.toFlower(index: Int): Flower {
+        val flowerId = index.toLong()
+        return Flower(label,price,pictures.small,text, flowerId)
     }
 }

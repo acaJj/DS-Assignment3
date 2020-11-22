@@ -6,7 +6,7 @@
     <data>
         <variable
             name="flower"
-            type="sheridan.jaca.assignment3.network.Flower" />
+            type="sheridan.jaca.assignment3.domain.Flower" />
     </data>
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:id="@+id/flower_image_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:imageUrl="@{flower.smallImgSrcUrl}"/>
+            app:imageUrl="@{flower.imgUrl}"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,7 +29,7 @@
                     android:id="@+id/flower_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{flower.name}"
+                    android:text="@{flower.label}"
                     android:textColor="#4CAF50"
                     android:textSize="30sp"
                     android:layout_margin="10dp"/>
@@ -38,7 +38,7 @@
                     android:id="@+id/flower_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{Double.toString(flower.price)}"
+                    android:text="@{flower.price}"
                     android:textColor="#4CAF50"
                     android:textSize="30sp"
                     android:layout_margin="10dp"/>
