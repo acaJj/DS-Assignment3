@@ -15,8 +15,11 @@
         android:layout_height="200dp">
         <ImageView
             android:id="@+id/flower_image_small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:imageUrl="@{flower.imgUrl}"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,8 +34,8 @@
                     android:layout_height="wrap_content"
                     android:text="@{flower.label}"
                     android:textColor="#4CAF50"
-                    android:textSize="30sp"
-                    android:layout_margin="10dp"/>
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
 
                 <TextView
                     android:id="@+id/flower_price"
@@ -40,16 +43,16 @@
                     android:layout_height="wrap_content"
                     android:text="@{flower.price}"
                     android:textColor="#4CAF50"
-                    android:textSize="30sp"
-                    android:layout_margin="10dp"/>
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/flower_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{flower.text}"
-                android:textSize="20sp"
-                android:layout_margin="10dp"/>
+                android:textSize="15sp"
+                android:layout_margin="5dp"/>
         </LinearLayout>
     </LinearLayout>
 </layout>
