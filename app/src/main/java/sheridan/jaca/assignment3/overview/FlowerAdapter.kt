@@ -9,7 +9,8 @@ import sheridan.jaca.assignment3.databinding.RecyclerViewItemBinding
 import sheridan.jaca.assignment3.domain.Flower
 import sheridan.jaca.assignment3.network.FlowerJson
 
-class FlowerAdapter : ListAdapter<Flower,FlowerAdapter.FlowerViewHolder>(DiffCallback) {
+class FlowerAdapter(private val onClickListener:OnClickListener)
+    : ListAdapter<Flower,FlowerAdapter.FlowerViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowerViewHolder {
        return FlowerViewHolder(RecyclerViewItemBinding.inflate(LayoutInflater.from(parent.context)))
@@ -17,6 +18,9 @@ class FlowerAdapter : ListAdapter<Flower,FlowerAdapter.FlowerViewHolder>(DiffCal
 
     override fun onBindViewHolder(holder: FlowerViewHolder, position: Int) {
         val flower = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(flower)
+        }
         return holder.bind(flower)
     }
 
@@ -45,5 +49,9 @@ class FlowerAdapter : ListAdapter<Flower,FlowerAdapter.FlowerViewHolder>(DiffCal
                 return FlowerViewHolder(binding)
             }
         }
+    }
+
+    class OnClickListener(val clickListener: (flower:Flower) -> Unit){
+        fun onClick(flower:Flower) = clickListener(flower)
     }
 }

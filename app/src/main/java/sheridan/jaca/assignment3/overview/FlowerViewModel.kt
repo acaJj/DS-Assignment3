@@ -11,6 +11,11 @@ import java.lang.Exception
 class FlowerViewModel: ViewModel() {
     //val flowers = MutableLiveData<List<FlowerJson>>()
     private var flowers : LiveData<List<Flower>>? = null
+
+    private val _navigateToDetails = MutableLiveData<Flower>()
+    val navigateToDetails: LiveData<Flower>
+        get() = _navigateToDetails
+
     init {
         getFlowerData()
     }
@@ -38,6 +43,14 @@ class FlowerViewModel: ViewModel() {
         }
 
         //return flowers.also { flowers = it }*/
+    }
+
+    fun displayFlowerDetails(flowerData:Flower){
+        _navigateToDetails.value = flowerData
+    }
+
+    fun displayFlowerDetailsComplete(){
+        _navigateToDetails.value = null
     }
 
     private fun FlowerJson.toFlower(index: Int): Flower {

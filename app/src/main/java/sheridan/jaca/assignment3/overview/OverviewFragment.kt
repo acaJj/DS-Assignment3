@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import sheridan.jaca.assignment3.databinding.FragmentFlowerBinding
 
 class OverviewFragment : Fragment() {
@@ -26,12 +28,25 @@ class OverviewFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
-        val adapter = FlowerAdapter()
+
+        //set click listener
+        val adapter = FlowerAdapter(FlowerAdapter.OnClickListener {
+            viewModel.displayFlowerDetails(it)
+        })
+
         binding.flowerList.adapter = adapter
 
         viewModel.getFlowerData().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
+
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, {
+            if (null != it){
+                val action = OverviewFragmentDirections.actionOverviewToDetail(it)
+                this.findNavController().navigate(action)
+                viewModel.displayFlowerDetailsComplete()
+            }
+        })
 
         setHasOptionsMenu(true)
         return binding.root
