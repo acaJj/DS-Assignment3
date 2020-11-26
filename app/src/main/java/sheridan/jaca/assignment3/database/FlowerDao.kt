@@ -12,14 +12,14 @@ interface FlowerDao{
     suspend fun get(id:Long): FlowerEntity
 
     @Insert
-    suspend fun insert(donut: FlowerEntity): Long
+    suspend fun insert(flower: FlowerEntity): Long
 
     @Delete
-    suspend fun delete(donut: FlowerEntity)
+    suspend fun delete(flower: FlowerEntity)
 
     @Query("DELETE FROM flowers WHERE id=:id")
     suspend fun delete(id: Long)
 
     @Update
-    suspend fun update(donut: FlowerEntity)
+    suspend fun update(flower: FlowerEntity)
 }
