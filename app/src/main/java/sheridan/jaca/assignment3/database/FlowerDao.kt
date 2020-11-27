@@ -2,6 +2,7 @@ package sheridan.jaca.assignment3.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import sheridan.jaca.assignment3.domain.Flower
 
 @Dao
 interface FlowerDao{
@@ -13,6 +14,10 @@ interface FlowerDao{
 
     @Insert
     suspend fun insert(flower: FlowerEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll( flowers: List<FlowerEntity>)
+
 
     @Delete
     suspend fun delete(flower: FlowerEntity)

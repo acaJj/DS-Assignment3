@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import sheridan.jaca.assignment3.database.FlowerDatabase
 import sheridan.jaca.assignment3.databinding.FragmentFlowerBinding
 
 class OverviewFragment : Fragment() {
 
-    private val viewModel: FlowerViewModel by lazy {
-        ViewModelProvider(this).get(FlowerViewModel::class.java)
-    }
+    //private val viewModel: FlowerViewModel by lazy {
+      //  ViewModelProvider(this).get(FlowerViewModel::class.java)
+    //}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class OverviewFragment : Fragment() {
         val binding = FragmentFlowerBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        val viewModel = FlowerViewModel(requireContext())
         binding.viewModel = viewModel
 
         //set click listener
@@ -36,7 +38,7 @@ class OverviewFragment : Fragment() {
 
         binding.flowerList.adapter = adapter
 
-        viewModel.getFlowerData().observe(viewLifecycleOwner){
+        viewModel.flowers.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
 

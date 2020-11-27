@@ -22,7 +22,7 @@ abstract class FlowerDatabase : RoomDatabase(){
                 val instance = Room.databaseBuilder(
                     context,
                     FlowerDatabase::class.java,
-                    "donut_database"
+                    "flower_database"
                 ).build()
                 INSTANCE = instance
                 return instance

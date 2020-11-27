@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "flowers")
 data class FlowerEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id : Long,
     @ColumnInfo(name = "label")
     val label:String,

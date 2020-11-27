@@ -1,16 +1,25 @@
 package sheridan.jaca.assignment3.overview
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import sheridan.jaca.assignment3.database.FlowerDatabase
 import sheridan.jaca.assignment3.domain.Flower
 import sheridan.jaca.assignment3.network.FlowerJson
 import sheridan.jaca.assignment3.network.FlowerApi
+import sheridan.jaca.assignment3.repository.FlowerRepository
 import java.lang.Exception
 
-class FlowerViewModel: ViewModel() {
-    //val flowers = MutableLiveData<List<FlowerJson>>()
-    private var flowers : LiveData<List<Flower>>? = null
+class FlowerViewModel(context: Context): ViewModel() {
+
+    private var _flowers = MutableLiveData<List<Flower>>()
+    val flowers : LiveData<List<Flower>>
+        get() = _flowers
+
+    private val repository : FlowerRepository = FlowerRepository(FlowerDatabase.getInstance(context))
+   //private var flowers: LiveData<List<Flower>>? //old method
 
     private val _navigateToDetails = MutableLiveData<Flower>()
     val navigateToDetails: LiveData<Flower>
@@ -20,18 +29,22 @@ class FlowerViewModel: ViewModel() {
         getFlowerData()
     }
 
-    fun getFlowerData() : LiveData<List<Flower>>{
-       /* viewModelScope.launch {
+    // use repository method to retrieve flower data instead of doing it directly
+    fun getFlowerData(){
+        viewModelScope.launch {
             try {
-                val catalog = FlowerApi.retrofitService.getFlowerCatalog()
-                val flowerData = catalog.flowers
-                flowers.value = flowerData.mapIndexed { index, flowerJson -> flowerJson.toFlower(index) }
-                Log.i("SUCCESS","JSON RETRIEVAL COMPLETED")
+                _flowers.value = repository.getFlowerData()
+                Log.i("SUCCESS","FLOWER RETRIEVAL COMPLETED")
             }catch (e: Exception){
-                Log.i("ERROR","JSON RETRIEVAL FAILED")
-            }
-        }*/
+                Log.i("ERROR",e.message.toString())
 
+                //ERROR: Cannot invoke setValue on a background thread
+            }
+        }
+    }
+
+    //method of retrieving JSON directly through API service
+/*    fun getFlowerData() : LiveData<List<Flower>>{
         return flowers ?: liveData {
             val catalog = FlowerApi.retrofitService.getFlowerCatalog()
             val flowers = catalog.flowers.mapIndexed { index, flowerJson ->
@@ -42,8 +55,8 @@ class FlowerViewModel: ViewModel() {
             flowers = it
         }
 
-        //return flowers.also { flowers = it }*/
-    }
+        return flowers.also { flowers = it }
+    }*/
 
     fun displayFlowerDetails(flowerData:Flower){
         _navigateToDetails.value = flowerData
