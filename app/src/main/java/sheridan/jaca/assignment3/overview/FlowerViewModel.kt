@@ -30,7 +30,7 @@ class FlowerViewModel(context: Context): ViewModel() {
     }
 
     // use repository method to retrieve flower data instead of doing it directly
-    fun getFlowerData(){
+    private fun getFlowerData(){
         viewModelScope.launch {
             try {
                 _flowers.value = repository.getFlowerData()

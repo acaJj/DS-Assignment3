@@ -1,5 +1,6 @@
 package sheridan.jaca.assignment3.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -45,16 +46,21 @@ class FlowerRepository (private val db: FlowerDatabase){
     suspend fun update(flower: Flower){
         flowerDao.update(flower.toFlowerEntity())
     }
+
     suspend fun getFlowerData(): List<Flower> {
         return withContext(Dispatchers.IO) {
-            val catalog = FlowerApi.retrofitService.getFlowerCatalog()
-            val flowers = catalog.flowers.mapIndexed { index, flowerJson ->
-                flowerJson.toFlower(index)
-            }
 
-            insert(flowers)
+                val catalog = FlowerApi.retrofitService.getFlowerCatalog()
+                val flowers = catalog.flowers.mapIndexed { index, flowerJson ->
+                    flowerJson.toFlower(index)
+                }
 
-            return@withContext flowers
+                //insert flowers into db
+                insert(flowers)
+                //return data
+                return@withContext flowers
+
+
         }
     }
 
