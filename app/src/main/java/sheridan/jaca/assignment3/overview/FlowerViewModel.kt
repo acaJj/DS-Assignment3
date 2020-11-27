@@ -37,8 +37,6 @@ class FlowerViewModel(context: Context): ViewModel() {
                 Log.i("SUCCESS","FLOWER RETRIEVAL COMPLETED")
             }catch (e: Exception){
                 Log.i("ERROR",e.message.toString())
-
-                //ERROR: Cannot invoke setValue on a background thread
             }
         }
     }
@@ -66,8 +64,4 @@ class FlowerViewModel(context: Context): ViewModel() {
         _navigateToDetails.value = null
     }
 
-    private fun FlowerJson.toFlower(index: Int): Flower {
-        val flowerId = index.toLong()
-        return Flower(label,price,pictures.small,text, flowerId)
-    }
 }
